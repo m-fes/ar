@@ -9,6 +9,7 @@ public class ARTapToPlace : MonoBehaviour
     public ARView arView;                    
     private ARRaycastManager raycastManager;
     private List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    public ARViewSettings arViewSettings;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class ARTapToPlace : MonoBehaviour
         {
             Pose hitPose = hits[0].pose;
             arView.PlaceObject(hitPose.position);
+            arViewSettings.SetScanningMode(false);
         }
     }
 }
