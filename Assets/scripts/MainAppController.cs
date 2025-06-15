@@ -8,7 +8,7 @@ public class MainAppController : MonoBehaviour
 {
     [Header("Dependencies")]
     public InteractionController interactionController;
-    public GameObject cubePrefab;
+    private GameObject selectedPrefab;
     public Camera mainSceneCamera;
 
     private bool isARMode;          
@@ -81,15 +81,29 @@ public class MainAppController : MonoBehaviour
     {
         isARMode = true;
         mainSceneCamera.enabled = false;
-        interactionController.DisplayObject(cubePrefab, true);
+        interactionController.DisplayObject(selectedPrefab, true);
     }
 
     private void SwitchToFallback()
     {
         isARMode = false;
         mainSceneCamera.enabled = true;
-        interactionController.DisplayObject(cubePrefab, false);
+        interactionController.DisplayObject(selectedPrefab, false);
         SceneManager.UnloadSceneAsync("ARScene");
         arSceneLoaded = false;
     }
+
+    public void SetSelectedPrefab(GameObject prefab)
+    {
+        selectedPrefab = prefab;
+        if (isARMode)
+        {
+            interactionController.DisplayObject(selectedPrefab, true);
+        }
+        else
+        {
+            interactionController.DisplayObject(selectedPrefab, false);
+        }
+    }
+
 }
